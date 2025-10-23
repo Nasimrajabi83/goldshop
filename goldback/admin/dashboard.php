@@ -19,7 +19,7 @@ $result = mysqli_query($conn, $query);
     * { box-sizing: border-box; }
     body {
         font-family: sans-serif;
-        background: linear-gradient(135deg, #000, #333);
+        background:linear-gradient(135deg, #fef8d1ff, #fffdfdff);
         margin: 0;
         color: white;
     }
@@ -29,16 +29,16 @@ $result = mysqli_query($conn, $query);
         text-align: center;
         font-size: 22px;
         font-weight: bold;
-        color: gold;
+        color: rgb(194, 174, 142);
         position: relative;
-        box-shadow: 0 0 10px rgba(255,215,0,0.5);
+        box-shadow: 0 0 10px rgb(194, 174, 142);
     }
     .logout {
         position: absolute;
         left: 20px;
         top: 50%;
         transform: translateY(-50%);
-        background: gold;
+        background:rgb(194, 174, 142);
         color: black;
         padding: 8px 15px;
         text-decoration: none;
@@ -60,7 +60,7 @@ $result = mysqli_query($conn, $query);
     }
     .add {
         display: inline-block;
-        background: gold;
+        background: rgb(194, 174, 142);
         color: black;
         padding: 10px 15px;
         text-decoration: none;
@@ -69,12 +69,12 @@ $result = mysqli_query($conn, $query);
         margin-bottom: 20px;
         transition: background 0.3s ease;
     }
-    .add:hover { background: #d4af37; }
+    .add:hover { background: rgb(194, 174, 142); }
 
     table {
         width: 100%;
         border-collapse: collapse;
-        background: rgba(255,255,255,0.05);
+        background: rgb(194, 174, 142);
         border-radius: 8px;
         overflow: hidden;
     }
@@ -83,12 +83,12 @@ $result = mysqli_query($conn, $query);
         text-align: center;
     }
     th {
-        background: gold;
+        background: rgb(194, 174, 142);
         color: black;
         font-weight: bold;
     }
-    tr:nth-child(even) { background: rgba(255,255,255,0.05); }
-    tr:nth-child(odd) { background: rgba(255,255,255,0.1); }
+    tr:nth-child(even) { background: rgb(194, 174, 142); }
+    tr:nth-child(odd) { background: rgb(194, 174, 142); }
     img {
         border-radius: 5px;
         max-width: 60px;

@@ -23,7 +23,7 @@ function Login() {
       if (data.status === "success") {
         alert("ورود با موفقیت انجام شد ✅");
         console.log("اطلاعات کاربر:", data.user);
-        navigate("/dashboard"); 
+        navigate("/"); 
       } else {
         alert(data.message);
       }

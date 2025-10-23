@@ -44,7 +44,7 @@ if (isset($_POST['submit'])) {
     * { box-sizing: border-box; }
     body {
         font-family: sans-serif;
-        background: linear-gradient(135deg, #000, #222);
+        background: linear-gradient(135deg, #fef8d1ff, #fffdfdff);
         color: white;
         margin: 0;
         display: flex;
@@ -58,11 +58,11 @@ if (isset($_POST['submit'])) {
         width: 90%;
         max-width: 500px;
         border-radius: 10px;
-        box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+        box-shadow: 0 0 30px rgba(255, 221, 0, 0.4);
     }
     h3 {
         text-align: center;
-        color: gold;
+        color: rgb(194, 174, 142);
         margin-bottom: 20px;
         font-size: 22px;
     }
@@ -77,7 +77,7 @@ if (isset($_POST['submit'])) {
         padding: 10px;
         margin-top: 6px;
         background: rgba(255, 255, 255, 0.05);
-        border: 1px solid gold;
+        border: 1px solid rgb(194, 174, 142);
         border-radius: 6px;
         color: white;
         font-size: 14px;
@@ -87,14 +87,14 @@ if (isset($_POST['submit'])) {
     }
     input:focus, textarea:focus {
         outline: none;
-        border-color: #ffd700;
+        border-color: rgb(194, 174, 142);
         background: rgba(255, 255, 255, 0.1);
     }
     button {
         width: 100%;
         margin-top: 20px;
         padding: 12px;
-        background: gold;
+        background: rgba(248, 172, 49, 1);
         border: none;
         border-radius: 6px;
         font-weight: bold;
@@ -104,13 +104,13 @@ if (isset($_POST['submit'])) {
         color: black;
     }
     button:hover {
-        background: #d4af37;
+        background: rgb(194, 174, 142);
     }
     a {
         display: block;
         text-align: center;
         margin-top: 15px;
-        color: gold;
+        color:rgb(194, 174, 142);
         text-decoration: none;
         font-size: 14px;
     }

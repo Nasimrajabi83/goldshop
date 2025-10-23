@@ -47,6 +47,7 @@ function Register() {
                   <Form.Label className="text-dark">نام و نام خانوادگی</Form.Label>
                   <Form.Control
                     type="text"
+                    style={{color:'black'}}
                     placeholder="مثال: علی احمدی"
                     value={fullname}
                     onChange={(e) => setFullname(e.target.value)}
@@ -58,6 +59,7 @@ function Register() {
                   <Form.Label className="text-dark">ایمیل</Form.Label>
                   <Form.Control
                     type="email"
+                    style={{color:'black'}}
                     placeholder="ایمیل خود را وارد کنید"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -69,6 +71,7 @@ function Register() {
                   <Form.Label className="text-dark">رمز عبور</Form.Label>
                   <Form.Control
                     type="password"
+                    style={{color:'black'}}
                     placeholder="رمز عبور خود را وارد کنید"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
