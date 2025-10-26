@@ -142,6 +142,10 @@ text-decoration: none;
 .btn-warning:hover {
   background-color: rgb(194, 174, 142);
 }
+.lbtn:hover{
+  background-color: #212123 !important;
+  color: #ccc !important;
+}
 
 /* فیلدهای ورودی */
 .form-control {

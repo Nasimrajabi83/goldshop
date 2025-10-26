@@ -1,8 +1,7 @@
 <?php
-// آدرس دقیق frontend
+// تنظیمات CORS
 $frontendOrigin = "http://localhost:5173";
 
-// هدرهای CORS
 header("Access-Control-Allow-Origin: $frontendOrigin");
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
@@ -14,9 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-// تنظیم cookie برای session
-ini_set('session.cookie_samesite', 'None'); 
-ini_set('session.cookie_secure', '0'); // برای localhost با http
+// برای localhost
+ini_set('session.cookie_samesite', 'None');
+ini_set('session.cookie_secure', '0'); 
 session_start();
 
 include("db.php");
@@ -42,9 +41,10 @@ if ($result->num_rows === 0) {
 
 $user = $result->fetch_assoc();
 
-// بررسی پسورد
+// بررسی پسورد (الان ساده — در آینده بهتره hash بشه)
 if ($password === $user["password"]) {
-    // ست کردن session
+
+    // ✅ ست کردن session
     $_SESSION['user_id'] = $user['id'];
     $_SESSION['fullname'] = $user['fullname'];
 
@@ -57,6 +57,7 @@ if ($password === $user["password"]) {
             "email" => $user["email"]
         ]
     ]);
+
 } else {
     echo json_encode(["status" => "error", "message" => "رمز عبور اشتباه است."]);
 }

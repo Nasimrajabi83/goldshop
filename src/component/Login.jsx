@@ -15,14 +15,17 @@ function Login() {
       const response = await fetch("http://localhost/goldshop-main/backend/login.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
 
       if (data.status === "success") {
+        // ✅ ذخیره کاربر در localStorage
+        localStorage.setItem("user", JSON.stringify(data.user));
+
         alert("ورود با موفقیت انجام شد ✅");
-        console.log("اطلاعات کاربر:", data.user);
         navigate("/"); 
       } else {
         alert(data.message);
