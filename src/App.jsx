@@ -8,6 +8,8 @@ import Dashboard from './component/dashboard';
 import Invoice from './component/Invoice';
 import Orders from './component/Orders';
 import UserInfo from './component/UserInfo'
+import About from './component/About';
+import Contact from './component/Contact';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import './index.css'
@@ -29,6 +31,9 @@ function App() {
         <Route path='/invoice' element={<Invoice/>}/>
         <Route path='/orders' element={<Orders/>}/>
         <Route path='/userinfo' element={<UserInfo/>}/>
+        <Route path='/about' element={<About/>}/>
+        <Route path='/contact' element={<Contact/>}/>
+        
         </Route>
       </Routes>
     </div>

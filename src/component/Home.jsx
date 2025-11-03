@@ -20,26 +20,40 @@ function Home() {
 
   // قیمت طلا
   useEffect(() => {
-    const fetchGoldPrice = async () => {
-      try {
-        const response = await fetch("https://api.navasan.tech/latest/?api_key=freeEls84SrIBqteiA5mbLP9fabNmbZI");
-        if (!response.ok) throw new Error("ارتباط با سرور برقرار نشد ❌");
+  let isMounted = true; // برای جلوگیری از setState بعد از unmount
 
-        const data = await response.json();
-        if (data && data["18ayar"]?.value) {
-          const price = Number(data["18ayar"].value).toLocaleString("fa-IR");
+  const fetchGoldPrice = async () => {
+    try {
+      const response = await fetch("https://api.navasan.tech/latest/?api_key=freeEls84SrIBqteiA5mbLP9fabNmbZI");
+
+      if (!response.ok) {
+        if (response.status === 429) throw new Error("درخواست زیاد ❌ لطفاً بعداً تلاش کنید");
+        throw new Error("ارتباط با سرور برقرار نشد ❌");
+      }
+
+      const data = await response.json();
+      if (data && data["18ayar"]?.value) {
+        const price = Number(data["18ayar"].value).toLocaleString("fa-IR");
+        if (isMounted) {
           setGoldPrice(price);
           setError(null);
-        } else setError("داده معتبر دریافت نشد ⚠️");
-      } catch {
-        setError("ارتباط با سرور برقرار نشد ❌");
+        }
+      } else {
+        if (isMounted) setError("داده معتبر دریافت نشد ⚠️");
       }
-    };
+    } catch (err) {
+      if (isMounted) setError(err.message || "ارتباط با سرور برقرار نشد ❌");
+    }
+  };
 
-    fetchGoldPrice();
-    const interval = setInterval(fetchGoldPrice, 300000);
-    return () => clearInterval(interval);
-  }, []);
+  fetchGoldPrice();
+  const interval = setInterval(fetchGoldPrice, 30 * 60 * 1000); // هر نیم‌ساعت
+
+  return () => {
+    isMounted = false;
+    clearInterval(interval);
+  };
+}, []);
 
   console.log("Current user:", user);
 
@@ -53,8 +67,8 @@ function Home() {
 
           {/* سرچ باکس + قیمت طلا */}
           <div className="mx-auto order-lg-2 d-none d-lg-flex align-items-center gap-3">
-            <Form className="d-flex" style={{ width: "350px" }}>
-              <FormControl type="search" placeholder="search..." className="search me-2" aria-label="Search" />
+            <Form className="d-flex" style={{ width: "350px",color:"black" }}>
+              <FormControl type="search" style={{ color:"black" }} placeholder="search..." className="search me-2" aria-label="Search" />
               <Button variant="outline-dark">search</Button>
             </Form>
             <div
@@ -85,8 +99,8 @@ function Home() {
                 <Nav.Link as={Link} to="/cart" className="me-4 d-flex align-items-center gap-1">
                   <FaShoppingBasket className='icon' />
                 </Nav.Link>
-                <Nav.Link href="#about" className='me-4'>درباره ما</Nav.Link>
-                <Nav.Link href="#contact" className='me-4'>
+                <Nav.Link as={Link} to="/about" className='me-4'>درباره ما</Nav.Link>
+                <Nav.Link  as={Link} to="/contact" className='me-4'>
                   تماس با ما <TiPhone className='icon' />
                 </Nav.Link>
 

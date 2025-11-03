@@ -93,11 +93,7 @@ function UserInfo() {
               <b>شماره تماس:</b> {user.phone}
             </p>
           )}
-          {user.address && (
-            <p>
-              <b>آدرس:</b> {user.address}
-            </p>
-          )}
+         
         </div>
 
         <button

@@ -1,134 +1,72 @@
-import React, { useEffect, useState } from 'react';
-import { Navbar, Nav, Container, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
-import "../App.css";
-import { FaRegUser } from "react-icons/fa";
-import { TiPhone } from "react-icons/ti";
-import { FaShoppingBasket } from "react-icons/fa";
-import { Link, Outlet } from 'react-router-dom';
-import Footer from './Footer';
+import React, { useEffect, useState } from "react";
+import { Table, Container, Button } from "react-bootstrap";
 
-function Home() {
-  const [goldPrice, setGoldPrice] = useState(null);
+function Invoices() {
+  const [invoices, setInvoices] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [user, setUser] = useState(null); // ✅ اضافه شد
 
-  // بررسی وضعیت لاگین
   useEffect(() => {
-    fetch("http://localhost/goldshop-main/backend/checkLogin.php", {
-      credentials: "include"
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.loggedIn) setUser(data.user);
-        else setUser(null);
-      })
-      .catch(err => console.error(err));
-  }, []);
-
-  // قیمت طلا
-  useEffect(() => {
-    const fetchGoldPrice = async () => {
+    const fetchInvoices = async () => {
       try {
-        const response = await fetch("https://api.navasan.tech/latest/?api_key=freeEls84SrIBqteiA5mbLP9fabNmbZI");
-        if (!response.ok) throw new Error("ارتباط با سرور برقرار نشد ❌");
+        // شبیه‌سازی API
+        const data = [
+          // داده نمونه، اگر خالی باشد پیام "هیچ فاکتوری یافت نشد" نمایش داده می‌شود
+          // { id: 1, date: "2025-10-31", amount: 1250000, status: "پرداخت شده" },
+        ];
 
-        const data = await response.json();
-        if (data && data["18ayar"]?.value) {
-          const price = Number(data["18ayar"].value).toLocaleString("fa-IR");
-          setGoldPrice(price);
-          setError(null);
-        } else setError("داده معتبر دریافت نشد ⚠️");
-      } catch {
-        setError("ارتباط با سرور برقرار نشد ❌");
+        setInvoices(data);
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+        setError("مشکل در دریافت فاکتورها ❌");
+        setLoading(false);
       }
     };
 
-    fetchGoldPrice();
-    const interval = setInterval(fetchGoldPrice, 300000);
-    return () => clearInterval(interval);
+    fetchInvoices();
   }, []);
 
+  if (loading) return <p className="text-center mt-4">در حال بارگذاری فاکتورها...</p>;
+  if (error) return <p className="text-center text-danger mt-4">{error}</p>;
+
   return (
-    <div className="layout-container">
-      <Navbar expand="lg" variant="dark" sticky="top">
-        <Container fluid>
-          <div className="d-flex align-items-center order-lg-1 ms-lg-3">
-            <Navbar.Brand href="/" className="brand fw-bold">GoldShop</Navbar.Brand>
-          </div>
+    <Container style={{ direction: "rtl", textAlign: "right", marginTop: "2rem" }}>
 
-          {/* سرچ باکس + قیمت طلا */}
-          <div className="mx-auto order-lg-2 d-none d-lg-flex align-items-center gap-3">
-            <Form className="d-flex" style={{ width: "350px" }}>
-              <FormControl type="search" placeholder="search..." className="search me-2" aria-label="Search" />
-              <Button variant="outline-dark">search</Button>
-            </Form>
-            <div
-              style={{
-                background: "rgba(194, 174, 142, 0.2)",
-                border: "1px solid rgb(194, 174, 142)",
-                color: "rgb(194, 174, 142)",
-                padding: "6px 12px",
-                borderRadius: "8px",
-                fontSize: "14px",
-                fontWeight: "bold",
-                minWidth: "160px",
-                textAlign: "center",
-              }}
-            >
-              {error
-                ? error
-                : goldPrice
-                ? `طلا ۱۸ عیار: ${goldPrice} تومان`
-                : "در حال بارگذاری..."}
-            </div>
-          </div>
-
-          <div className="d-flex align-items-center order-lg-3 me-lg-3">
-            <Navbar.Toggle aria-controls="main-navbar" />
-            <Navbar.Collapse id="main-navbar">
-              <Nav className="ms-auto align-items-center">
-                <Nav.Link as={Link} to="/cart" className="me-4 d-flex align-items-center gap-1">
-                  <FaShoppingBasket className='icon' />
-                </Nav.Link>
-                <Nav.Link href="#about" className='me-4'>درباره ما</Nav.Link>
-                <Nav.Link href="#contact" className='me-4'>
-                  تماس با ما <TiPhone className='icon' />
-                </Nav.Link>
-
-                <NavDropdown title="فروشگاه" id="store-dropdown" menuVariant="dark" className='custom-dropdown me-4' align="end">
-                  <NavDropdown.Item href="#ring">انگشتر</NavDropdown.Item>
-                  <NavDropdown.Item href="#necklace">گردنبند</NavDropdown.Item>
-                  <NavDropdown.Item href="#earring">گوشواره</NavDropdown.Item>
-                  <NavDropdown.Item href="#bracelet">دستبند</NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="#all">مشاهده همه محصولات</NavDropdown.Item>
-                </NavDropdown>
-
-                {/* ✅ تغییر مهم */}
-                {user ? (
-                  <Link to="/dashboard" className="nav-link me-4 d-flex align-items-center gap-1">
-                    {user.fullname} | داشبورد
-                    <FaRegUser className="icon" />
-                  </Link>
-                ) : (
-                  <Link to="/login" className="nav-link me-4 d-flex align-items-center gap-1">
-                    ورود / ثبت نام
-                    <FaRegUser className="icon" />
-                  </Link>
-                )}
-              </Nav>
-            </Navbar.Collapse>
-          </div>
-        </Container>
-      </Navbar>
-
-      <div>
-        <Outlet />
-      </div>
-
-      <Footer />
-    </div>
+      {invoices.length === 0 ? (
+        <p className="text-center fs-5" style={{ color: "rgb(194,174,142)" }}>
+          هیچ فاکتوری یافت نشد
+        </p>
+      ) : (
+        <Table striped bordered hover responsive>
+          <thead style={{ backgroundColor: "rgb(194,174,142)", color: "#fff" }}>
+            <tr>
+              <th>شماره فاکتور</th>
+              <th>تاریخ</th>
+              <th>مبلغ (تومان)</th>
+              <th>وضعیت</th>
+              <th>جزئیات</th>
+            </tr>
+          </thead>
+          <tbody>
+            {invoices.map((inv) => (
+              <tr key={inv.id}>
+                <td>{inv.id}</td>
+                <td>{inv.date}</td>
+                <td>{inv.amount.toLocaleString("fa-IR")}</td>
+                <td>{inv.status}</td>
+                <td>
+                  <Button variant="outline-dark" size="sm">
+                    مشاهده
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      )}
+    </Container>
   );
 }
 
-export default Home;
+export default Invoices;
